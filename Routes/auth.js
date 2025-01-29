@@ -3,9 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const users = [
-
-];
+const users = [];
 
 router.post('/register',async (req,res)=>{
     const {username,email,password,role}= req.body;
@@ -21,9 +19,27 @@ router.post('/register',async (req,res)=>{
             role
         }
         users.push(newUser);
-        console.log(users);
+        //console.log(users);
         res.send({message : "User registered successfully"});
     }
+});
+
+router.post('/login',async (req,res)=>{
+    const {email,password} = req.body;
+    const index = users.findIndex(user => user.email === email);
+    if(index == -1){
+        return res.status(401).send({message :'Invalid credentials'});
+    }
+    
+    const passwordValid = await bcrypt.compare(password,users[index].hashedPassword);
+    if(!passwordValid){
+        return res.status(401).send({message :'Invalid credentials'});
+    }
+    
+    const token = jwt.sign({email: users[index].email,role : users[index].role},process.env.JWT_SECRET);
+    res.send({token});
+    //console.log(process.env.JWT_SECRET);
+    
 });
 
 module.exports = router;

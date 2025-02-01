@@ -19,7 +19,6 @@ router.post('/register',async (req,res)=>{
             role
         }
         users.push(newUser);
-        //console.log(users);
         res.send({message : "User registered successfully"});
     }
 });

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const auth = require('./Routes/auth');
 const events = require('./Routes/events');
+const registration = require('./Routes/registration');
 const port = 3000;
 require('dotenv').config();
 
@@ -17,6 +18,7 @@ const logger = (req,res,next)=>{
 app.use(logger);
 app.use(auth);
 app.use(events);
+app.use(registration);
 
 app.get('/',(req,res)=>{
     res.send("Virtual Event Management");

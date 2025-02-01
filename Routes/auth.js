@@ -37,7 +37,6 @@ router.post('/login',async (req,res)=>{
     
     const token = jwt.sign({email: users[index].email,role : users[index].role},process.env.JWT_SECRET);
     res.send({token});
-    //console.log(process.env.JWT_SECRET);
     
 });
 

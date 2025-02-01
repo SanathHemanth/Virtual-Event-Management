@@ -1,10 +1,11 @@
 const {events} = require('./eventController');
+const {registrationMail} = require('../utils/email');
 
-
-const joinEvent =(req,res)=>{
+const joinEvent =async (req,res)=>{
     try{
         const id = parseInt(req.params.id);
         const {email} = req.user;
+        //const {email} = req.body;
         console.log(email);
         if(!email){
             return res.status(404).send({ message: 'Invalid Request' });
@@ -16,7 +17,8 @@ const joinEvent =(req,res)=>{
             }
             if(!event.attendee.includes(email)){
                 event.attendee.push(email);
-                res.send({message : 'Registerd successfull'});
+                await registrationMail(email,event.title);
+                res.send({message : 'Registration successfull'});
             }
             else{
                 return res.send({message: 'Already registered'});

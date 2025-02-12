@@ -22,7 +22,8 @@ const createEvent = (req, res) => {
             newEvent.id = events[len - 1].id + 1;
         }
         events.push(newEvent);
-        res.send({ message: 'Event created' });
+        //res.send({ message: 'Event created' });
+        res.send(newEvent);
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
@@ -41,7 +42,8 @@ const updateEvent = (req, res) => {
         }
         const updateEvent = { title, date, time, description, id };
         events[index] = updateEvent;
-        res.send({ message: 'Event updated' });
+        //res.send({ message: 'Event updated' });
+        res.send(updateEvent);
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
